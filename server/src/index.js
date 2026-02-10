@@ -25,11 +25,17 @@ cron.schedule('0 * * * *', async () => {
 });
 
 const PORT = process.env.PORT || 4000;
-connectDb()
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server http://localhost:${PORT}`));
-  })
-  .catch((err) => {
-    console.error('DB connection failed:', err);
-    process.exit(1);
-  });
+
+// On Vercel we only export the app (no listen); Vercel invokes it per request.
+if (!process.env.VERCEL) {
+  connectDb()
+    .then(() => {
+      app.listen(PORT, () => console.log(`Server http://localhost:${PORT}`));
+    })
+    .catch((err) => {
+      console.error('DB connection failed:', err);
+      process.exit(1);
+    });
+}
+
+export default app;
