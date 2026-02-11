@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
-    const target = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const target = process.env.NEXT_PUBLIC_API_URL || 'https://data-scraping-pii9.onrender.com';
     return [{ source: '/api/:path*', destination: `${target}/api/:path*` }];
   },
 };
